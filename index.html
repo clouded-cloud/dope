@@ -775,6 +775,26 @@
             font-size: 1.1rem;
         }
 
+        .add-to-cart-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            border: 1px solid var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: transparent;
+            color: var(--text-dark);
+        }
+
         /* Footer - Made Smaller */
         footer {
             background-color: var(--secondary-bg);
@@ -992,11 +1012,11 @@
                 </ul>
             </nav>
             <div class="header-actions">
-              
-                <i class="fas fa-shopping-bag" id="cart-btn"></i>
+
+                <button class="fas fa-shopping-bag" id="cart-btn"></button>
+
                 <div class="cart-badge" id="cart-badge">0</div>
-               
-                    
+
                 </div>
             </div>
         </div>
@@ -1017,8 +1037,8 @@
             <span id="cart-total">$0.00</span>
         </div>
         <div class="cart-actions">
-            <a href="#" class="cart-button secondary">Continue Shopping</a>
-            <a href="#" class="cart-button">Checkout</a>
+            <a href="#" class="cart-button secondary" id="continue-shopping">Continue Shopping</a>
+            <a href="#" class="cart-button" id="checkout-btn">Checkout</a>
         </div>
     </div>
 
@@ -1151,6 +1171,7 @@
                 <div class="item-overlay">
                     <h3>French Terry Sweat Shirt</h3>
                     <p>$495</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="collection-item" data-product="French Terry Sweat Shirt" data-price="395" data-image="photos/sweatshirt2.jpg">
@@ -1158,6 +1179,7 @@
                 <div class="item-overlay">
                     <h3>French Terry Sweat Shirt</h3>
                     <p>$395</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="collection-item" data-product="French Terry Sweat Shirt" data-price="195" data-image="photos/sweatshirt3.jpg">
@@ -1165,6 +1187,7 @@
                 <div class="item-overlay">
                     <h3>French Terry Sweat Shirt</h3>
                     <p>$195</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="collection-item" data-product="Eternal cropped hoodie" data-price="195" data-image="photos/hoodie.jpg">
@@ -1172,6 +1195,7 @@
                 <div class="item-overlay">
                     <h3>Eternal cropped hoodie</h3>
                     <p>$195</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
         </div>
@@ -1186,6 +1210,7 @@
                 <div class="item-overlay">
                     <h3>Eternal Joggers</h3>
                     <p>$495</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="collection-item" data-product="Eternal Sweatpants" data-price="395" data-image="photos/sweatpant2.jpg">
@@ -1193,6 +1218,7 @@
                 <div class="item-overlay">
                     <h3>Eternal Joggers</h3>
                     <p>$395</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="collection-item" data-product="Eternal Sweatpants" data-price="195" data-image="photos/sweatpant3.jpg">
@@ -1200,6 +1226,7 @@
                 <div class="item-overlay">
                     <h3>Eternal Joggers</h3>
                     <p>$195</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="collection-item" data-product="Complete Outfit Set" data-price="850" data-image="photos/combo1.jpg">
@@ -1207,6 +1234,7 @@
                 <div class="item-overlay">
                     <h3>Complete Outfit Set</h3>
                     <p>$850</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
         </div>
@@ -1240,6 +1268,7 @@
                     <h3>Leather Rider Jacket</h3>
                     <p>Italian lambskin leather with custom hardware</p>
                     <div class="product-price">$1,895</div>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="product-card" data-product="Dope For Christ T-shirts" data-price="695" data-image="photos/shortsleeve1.jpg">
@@ -1250,6 +1279,7 @@
                     <h3>Dope For Christ T-shirts</h3>
                     <p>100% Mongolian cashmere, relaxed fit</p>
                     <div class="product-price">$695</div>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="product-card" data-product="Dope For Christ T-shirts" data-price="495" data-image="photos/shortsleeve2.jpg">
@@ -1260,6 +1290,7 @@
                     <h3>Dope For Christ T-shirts</h3>
                     <p>Italian wool, slim fit with subtle taper</p>
                     <div class="product-price">$495</div>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
             <div class="product-card" data-product="Dope For Christ T-shirts" data-price="595" data-image="photos/shortsleeve3.jpg">
@@ -1270,6 +1301,7 @@
                     <h3>Dope For Christ T-shirts</h3>
                     <p>Kobe Bryan selvedge denim, custom distressing</p>
                     <div class="product-price">$595</div>
+                    <button class="add-to-cart-btn">Add to Cart</button>
                 </div>
             </div>
         </div>
@@ -1416,10 +1448,10 @@
         // Add item to cart
         function addToCart(product, price, image) {
             // Check if item already exists in cart
-            const existingItemIndex = cart.findIndex(item => 
+            const existingItemIndex = cart.findIndex(item =>
                 item.product === product && item.price === price
             );
-            
+
             if (existingItemIndex !== -1) {
                 // Increase quantity if item exists
                 cart[existingItemIndex].quantity += 1;
@@ -1432,12 +1464,17 @@
                     quantity: 1
                 });
             }
-            
+
             // Add visual feedback
             const event = new CustomEvent('itemAddedToCart');
             document.dispatchEvent(event);
-            
+
             updateCartDisplay();
+
+            // Open cart popup to show added items
+            cartPopup.classList.add('active');
+            // Close account popup if open
+            accountPopup.classList.remove('active');
         }
 
         // Remove item from cart
@@ -1512,11 +1549,11 @@
         // Initialize account display
         updateAccountDisplay();
 
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            const nav = document.querySelector('nav');
-            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-        });
+        // Mobile menu toggle - commented out as element doesn't exist
+        // document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        //     const nav = document.querySelector('nav');
+        //     nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        // });
 
         // Logo click - scroll to top
         document.getElementById('logo').addEventListener('click', function() {
@@ -1543,19 +1580,19 @@
             lookbookSection.scrollIntoView({ behavior: 'smooth' });
         });
 
-        document.getElementById('nav-stores').addEventListener('click', function() {
-            alert('Store locations: \n• New York, NY\n• Los Angeles, CA\n• Miami, FL\n• Chicago, IL');
-        });
+        // document.getElementById('nav-stores').addEventListener('click', function() {
+        //     alert('Store locations: \n• New York, NY\n• Los Angeles, CA\n• Miami, FL\n• Chicago, IL');
+        // });
 
-        // Header action buttons
-        document.getElementById('search-btn').addEventListener('click', function() {
-            const searchTerm = prompt('What are you looking for?');
-            if (searchTerm) {
-                alert(`Searching for: "${searchTerm}"\n(Note: This is a demo search function)`);
-            }
-        });
+        // Header action buttons - commented out as elements don't exist
+        // document.getElementById('search-btn').addEventListener('click', function() {
+        //     const searchTerm = prompt('What are you looking for?');
+        //     if (searchTerm) {
+        //         alert(`Searching for: "${searchTerm}"\n(Note: This is a demo search function)`);
+        //     }
+        // });
 
-        // Cart button click - show/hide cart popup
+        // Cart button click - toggle cart popup
         document.getElementById('cart-btn').addEventListener('click', function(e) {
             e.stopPropagation();
             cartPopup.classList.toggle('active');
@@ -1567,17 +1604,29 @@
             cartPopup.classList.remove('active');
         });
 
-        // User button click - show/hide account popup
-        document.getElementById('user-btn').addEventListener('click', function(e) {
-            e.stopPropagation();
-            accountPopup.classList.toggle('active');
-            // Close cart popup if open
+        // Continue Shopping button - close cart popup
+        document.getElementById('continue-shopping').addEventListener('click', function(e) {
+            e.preventDefault();
             cartPopup.classList.remove('active');
         });
 
-        document.getElementById('close-account').addEventListener('click', function() {
-            accountPopup.classList.remove('active');
+        // Checkout button - show checkout alert
+        document.getElementById('checkout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Checkout functionality coming soon!\n\nIn a real implementation, this would redirect to a secure checkout page.');
         });
+
+        // User button click - commented out as element doesn't exist
+        // document.getElementById('user-btn').addEventListener('click', function(e) {
+        //     e.stopPropagation();
+        //     accountPopup.classList.toggle('active');
+        //     // Close cart popup if open
+        //     cartPopup.classList.remove('active');
+        // });
+
+        // document.getElementById('close-account').addEventListener('click', function() {
+        //     accountPopup.classList.remove('active');
+        // });
 
         // Close popups when clicking outside
         document.addEventListener('click', function(e) {
@@ -1751,9 +1800,9 @@
             lookbookSection.scrollIntoView({ behavior: 'smooth' });
         });
 
-        document.getElementById('footer-stores').addEventListener('click', function() {
-            alert('Visit us at:\n\n• NYC Flagship: 123 Madison Ave, New York\n• LA Showroom: 456 Rodeo Dr, Los Angeles\n• Miami Pop-up: 789 Ocean Dr, Miami\n• Chicago: 101 Michigan Ave, Chicago\n\nHours: Mon-Sat 10AM-8PM, Sun 12PM-6PM');
-        });
+        // document.getElementById('footer-stores').addEventListener('click', function() {
+        //     alert('Visit us at:\n\n• NYC Flagship: 123 Madison Ave, New York\n• LA Showroom: 456 Rodeo Dr, Los Angeles\n• Miami Pop-up: 789 Ocean Dr, Miami\n• Chicago: 101 Michigan Ave, Chicago\n\nHours: Mon-Sat 10AM-8PM, Sun 12PM-6PM');
+        // });
 
         // Newsletter form
         document.getElementById('newsletter-form').addEventListener('submit', function(e) {
