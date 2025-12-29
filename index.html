@@ -690,12 +690,8 @@
             background: linear-gradient(transparent, rgba(255, 255, 255, 0.9));
             padding: 30px 20px 20px;
             color: var(--text-dark);
-            transform: translateY(10px);
-            transition: transform 0.3s;
-        }
-
-        .collection-item:hover .item-overlay {
             transform: translateY(0);
+            transition: transform 0.3s;
         }
 
         .item-overlay h3 {
@@ -993,40 +989,76 @@
 
         @media (max-width: 768px) {
             .header-container nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
                 display: none;
             }
-            
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 20px 0;
+            }
+
+            nav ul li {
+                margin: 0;
+                text-align: center;
+                padding: 15px 0;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+
             .mobile-menu-btn {
                 display: block;
             }
-            
+
             .header-actions i:not(.mobile-menu-btn) {
                 display: none;
             }
-            
+
             .hero h1 {
                 font-size: 3rem;
             }
-            
+
             .hero p {
                 font-size: 1rem;
                 padding: 15px;
             }
-            
+
             .collection-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
-            
+
             .lookbook-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .footer-content {
                 grid-template-columns: 1fr;
             }
-            
+
             .section-title {
                 font-size: 2rem;
+            }
+
+            .add-to-cart-btn {
+                display: block;
+                width: 100%;
+                padding: 15px 20px;
+                font-size: 16px;
+                text-align: center;
+                margin-top: 10px;
             }
         }
 
@@ -1034,36 +1066,43 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
-            
+
             .hero p {
                 font-size: 0.9rem;
                 padding: 12px;
             }
-            
+
             .collection-item {
                 height: 400px;
             }
-            
+
             .lookbook-item {
                 height: 400px;
             }
-            
+
             .about-image {
                 height: 300px;
             }
-            
+
             .product-card {
                 min-width: 250px;
             }
-            
+
             .cart-popup,
             .account-popup {
                 width: 300px;
                 right: 10px;
             }
-            
+
             .account-stats {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        /* Fix for mobile: Make collection item overlays always visible */
+        @media (max-width: 768px) {
+            .item-overlay {
+                transform: translateY(0);
             }
         }
     </style>
@@ -1100,6 +1139,7 @@
 
                 <div class="cart-badge" id="cart-badge">0</div>
 
+                <i class="fas fa-bars mobile-menu-btn" id="mobile-menu-btn"></i>
                 </div>
             </div>
         </div>
@@ -1388,8 +1428,7 @@
             });
         }
          
-           initializeCurrencySelector();
-        updateAllPrices();
+           
 
         // Update currency display
         function updateCurrencyDisplay() {
@@ -1576,77 +1615,24 @@
             updateCartDisplay();
         }
 
-        // Account management functions
-        function updateAccountDisplay() {
-            if (isLoggedIn) {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('register-form').style.display = 'none';
-                document.getElementById('account-dashboard').style.display = 'block';
-                
-                // Update user info
-                document.getElementById('account-display-name').textContent = userData.name;
-                document.getElementById('account-display-email').textContent = userData.email;
-                document.getElementById('orders-count').textContent = userData.orders;
-                document.getElementById('points-count').textContent = userData.points;
-            } else {
-                document.getElementById('login-form').style.display = 'block';
-                document.getElementById('register-form').style.display = 'none';
-                document.getElementById('account-dashboard').style.display = 'none';
+        
+
+      
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('nav');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            if (nav.classList.contains('active') && !nav.contains(e.target) && !mobileBtn.contains(e.target)) {
+                nav.classList.remove('active');
             }
-        }
-
-        function login(email, password) {
-            // In a real app, this would validate against a backend
-            isLoggedIn = true;
-            localStorage.setItem('isLoggedIn', 'true');
-            
-            // For demo purposes, set some user data
-            userData = {
-                name: email.split('@')[0],
-                email: email,
-                orders: Math.floor(Math.random() * 10) + 1,
-                points: Math.floor(Math.random() * 1000) + 500
-            };
-            
-            localStorage.setItem('userData', JSON.stringify(userData));
-            updateAccountDisplay();
-            
-            // Show welcome message
-            const userBtn = document.getElementById('user-btn');
-            userBtn.style.color = 'var(--highlight-color)';
-            
-            // Close account popup after successful login
-            setTimeout(() => {
-                accountPopup.classList.remove('active');
-            }, 1000);
-        }
-
-        function logout() {
-            isLoggedIn = false;
-            localStorage.setItem('isLoggedIn', 'false');
-            
-            const userBtn = document.getElementById('user-btn');
-            userBtn.style.color = '';
-            
-            updateAccountDisplay();
-            
-            // Switch back to login form
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('register-form').style.display = 'none';
-            document.getElementById('account-dashboard').style.display = 'none';
-            
-            // Close account popup
-            accountPopup.classList.remove('active');
-        }
-
-        // Initialize account display
-        updateAccountDisplay();
-
-        // Mobile menu toggle - commented out as element doesn't exist
-        // document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-        //     const nav = document.querySelector('nav');
-        //     nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-        // });
+        });
 
         // Logo click - scroll to top
         document.getElementById('logo').addEventListener('click', function() {
@@ -1656,21 +1642,25 @@
         // Navigation buttons
         document.getElementById('nav-home').addEventListener('click', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelector('nav').classList.remove('active');
         });
 
         document.getElementById('nav-collections').addEventListener('click', function() {
             const collectionSection = document.querySelector('.section-title');
             collectionSection.scrollIntoView({ behavior: 'smooth' });
+            document.querySelector('nav').classList.remove('active');
         });
 
         document.getElementById('nav-eternal').addEventListener('click', function() {
             const eternalSection = document.querySelector('.about-eternal');
             eternalSection.scrollIntoView({ behavior: 'smooth' });
+            document.querySelector('nav').classList.remove('active');
         });
 
         document.getElementById('nav-lookbook').addEventListener('click', function() {
             const lookbookSection = document.querySelector('.lookbook');
             lookbookSection.scrollIntoView({ behavior: 'smooth' });
+            document.querySelector('nav').classList.remove('active');
         });
 
         // document.getElementById('nav-stores').addEventListener('click', function() {
@@ -1738,23 +1728,25 @@
             collectionSection.scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Add to cart functionality for collection items and product cards
-        document.querySelectorAll('.collection-item, .product-card').forEach(item => {
-            item.addEventListener('click', function() {
-                const productName = this.getAttribute('data-product');
-                const price = parseFloat(this.getAttribute('data-price'));
-                const image = this.getAttribute('data-image');
-                
+        // Add to cart functionality for add to cart buttons
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling to parent elements
+                const item = this.closest('.collection-item') || this.closest('.product-card');
+                const productName = item.getAttribute('data-product');
+                const price = parseFloat(item.getAttribute('data-price'));
+                const image = item.getAttribute('data-image');
+
                 // Add to cart (no alert)
                 addToCart(productName, price, image);
-                
+
                 // Visual feedback without alert
-                const originalBorder = this.style.border;
-                this.style.border = '2px solid var(--highlight-color)';
-                this.style.transition = 'border 0.3s';
-                
+                const originalBorder = item.style.border;
+                item.style.border = '2px solid var(--highlight-color)';
+                item.style.transition = 'border 0.3s';
+
                 setTimeout(() => {
-                    this.style.border = originalBorder;
+                    item.style.border = originalBorder;
                 }, 300);
             });
         });
@@ -1768,92 +1760,7 @@
             }, 300);
         });
 
-        // About section button
-        document.getElementById('process-btn').addEventListener('click', function() {
-            alert('Our Process:\n\n1. Material Selection: We source the finest sustainable fabrics\n2. Pattern Making: Each design undergoes multiple iterations\n3. Sample Creation: Prototypes are tested for fit and comfort\n4. Quality Control: Every garment is inspected by our experts\n5. Ethical Production: All items are crafted in certified facilities');
-        });
-
-        // Account form switching
-        document.getElementById('switch-to-register').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'block';
-        });
-
-        document.getElementById('switch-to-login').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('register-form').style.display = 'none';
-        });
-
-        // Login form submission
-        document.getElementById('login-form-element').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            if (email && password) {
-                login(email, password);
-                this.reset();
-            }
-        });
-
-        // Register form submission
-        document.getElementById('register-form-element').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('register-confirm-password').value;
-            
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
-            
-            if (name && email && password) {
-                login(email, password);
-                this.reset();
-                // Switch to login view
-                document.getElementById('login-form').style.display = 'block';
-                document.getElementById('register-form').style.display = 'none';
-            }
-        });
-
-        // Logout button
-        document.getElementById('logout-btn').addEventListener('click', function() {
-            logout();
-        });
-
-        // Account menu items
-        document.getElementById('account-orders').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Order History:\n\nYou have ' + userData.orders + ' previous orders.\nView your order history and track current shipments.');
-        });
-
-        document.getElementById('account-wishlist').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Your Wishlist:\n\nYou have 3 saved items:\n1. Eternal Sweatpants\n2. Leather Rider Jacket\n3. Complete Outfit Set');
-        });
-
-        document.getElementById('account-addresses').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Saved Addresses:\n\n1. Home: 123 Main St, New York, NY\n2. Work: 456 Office Ave, New York, NY\n3. Summer House: 789 Beach Rd, Miami, FL');
-        });
-
-        document.getElementById('account-payment').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Payment Methods:\n\n1. Visa **** 1234 (Primary)\n2. Mastercard **** 5678\n3. PayPal: ' + userData.email);
-        });
-
-        document.getElementById('account-settings').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Account Settings:\n\nManage your personal information, notification preferences, and privacy settings.');
-        });
-
-        document.getElementById('help-btn').addEventListener('click', function() {
-            alert('Help Center:\n\nContact Customer Service:\n• Email: support@dopeforchrist.com\n• Phone: 1-800-DOPE-CHRIST\n• Live Chat: Available 24/7\n\nFAQ & Returns Policy');
-        });
+      
 
         // About image click
         document.getElementById('about-image').addEventListener('click', function() {
@@ -1897,16 +1804,7 @@
         //     alert('Visit us at:\n\n• NYC Flagship: 123 Madison Ave, New York\n• LA Showroom: 456 Rodeo Dr, Los Angeles\n• Miami Pop-up: 789 Ocean Dr, Miami\n• Chicago: 101 Michigan Ave, Chicago\n\nHours: Mon-Sat 10AM-8PM, Sun 12PM-6PM');
         // });
 
-        // Newsletter form
-        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('newsletter-email').value;
-            if (email) {
-                alert(`Thank you for subscribing with ${email}!\nYou'll receive updates on new collections, exclusive offers, and upcoming events.`);
-                this.reset();
-            }
-        });
-
+      
 // Checkout button - redirect to Pesapal store
 document.getElementById('checkout-btn').addEventListener('click', function(e) {
     e.preventDefault();
@@ -1936,6 +1834,7 @@ document.getElementById('checkout-btn').addEventListener('click', function(e) {
 
         // Initialize currency selector
         initializeCurrencySelector();
+        updateAllPrices();
 
         // Update cart when currency changes
         document.addEventListener('currencyChanged', function() {
@@ -1951,7 +1850,7 @@ document.getElementById('checkout-btn').addEventListener('click', function(e) {
             }
             // Esc to close mobile menu and popups
             if (e.key === 'Escape') {
-                document.querySelector('nav').style.display = 'none';
+                document.querySelector('nav').classList.remove('active');
                 cartPopup.classList.remove('active');
                 accountPopup.classList.remove('active');
             }
